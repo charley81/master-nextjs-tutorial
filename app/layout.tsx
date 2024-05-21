@@ -15,7 +15,11 @@ export const metadata: Metadata = {
   description: 'This is my Next.js site'
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
       <body className={inconsolata.className}>
