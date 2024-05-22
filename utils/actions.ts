@@ -6,6 +6,7 @@ import { User, Tour } from '@/utils/types'
 
 const url = 'https://www.course-api.com/react-tours-project'
 
+// ===== create user =====
 export const createUserAction = async (
   prevState: unknown,
   formData: FormData
@@ -30,6 +31,7 @@ export const createUserAction = async (
   //redirect('/')
 }
 
+// ===== get users =====
 export const getUsers = async (): Promise<User[]> => {
   'use server'
   const result = await readFile('users.json', { encoding: 'utf-8' })
@@ -37,14 +39,33 @@ export const getUsers = async (): Promise<User[]> => {
   return users
 }
 
-const saveUser = async (user: User) => {
+// ===== save user =====
+export const saveUser = async (user: User) => {
   const users = await getUsers()
   users.push(user)
   await writeFile('users.json', JSON.stringify(users))
 }
 
+// ===== fetch tours =====
 export const fetchTours = async () => {
   const response = await fetch(url)
   const data: Tour[] = await response.json()
   return data
+}
+
+//
+export const deleteUser = async (formData: FormData) => {
+  const id = formData.get('id') as string
+  const users = await getUsers()
+  const filteredUsers = users.filter((user) => user.id !== id)
+  await writeFile('users.json', JSON.stringify(filteredUsers))
+  revalidatePath('/actions')
+}
+
+export const removeUser = async (id: string, formData: FormData) => {
+  const name = formData.get('name') as string
+  const users = await getUsers()
+  const filteredUsers = users.filter((user) => user.id !== id)
+  await writeFile('users.json', JSON.stringify(filteredUsers))
+  revalidatePath('/actions')
 }
