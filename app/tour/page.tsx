@@ -1,21 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-
-type Tour = {
-  id: string
-  name: string
-  info: string
-  image: string
-  price: string
-}
-
-const url = 'https://www.course-api.com/react-tours-project'
-
-const fetchTours = async () => {
-  const response = await fetch(url)
-  const data: Tour[] = await response.json()
-  return data
-}
+import { fetchTours } from '@/utils/actions'
 
 export default async function TourPage() {
   const tours = await fetchTours()
@@ -23,7 +8,7 @@ export default async function TourPage() {
   return (
     <section>
       <h1>Tours</h1>
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-16">
         {tours.map((tour) => (
           <Link key={tour.id} href={`/tour/${tour.id}`}>
             <div className="relative h-48 mb-2">

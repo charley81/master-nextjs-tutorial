@@ -1,3 +1,11 @@
+import Form from '@/components/form'
+import UsersList from '@/components/users-list'
+
 export default function ActionsPage() {
-  return <div>ActionsPage</div>
+  return (
+    <>
+      <Form />
+      <UsersList />
+    </>
+  )
 }
